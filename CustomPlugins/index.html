@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kendo UI DataViz</title>
+        <meta charset="UTF-8" />
+
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="kendo/styles/kendo.dataviz.min.css" rel="stylesheet" />
+        <link href="kendo/styles/kendo.dataviz.default.min.css" rel="stylesheet" />
+        <link href="styles/main.css" rel="stylesheet" />
+        <script src="cordova.js" type="text/javascript"></script>
+        <script src="scripts/libraries/jquery.min.js"></script>
+        <script src="scripts/libraries/rgbcolor.js"></script>
+        <script src="scripts/libraries/canvg.js"></script>
+        <script src="kendo/js/kendo.dataviz.mobile.min.js"></script>
+        <script src="scripts/hello-world.js"></script>
+    </head>
+
+    <body>
+        <div data-role="view" id="tabstrip-climate" data-title="Climate Dashboard" data-model="viewModel" data-init="onViewInitialized">
+            <div class="dataviz-wrapper">
+                <h1>
+                    Climate control history
+                </h1>
+                <div class="dataviz-wrapper-content">
+                    <div class="item">Pressure</div>
+                    <div class="spark">
+                        <div id="press-log"
+                             data-role="sparkline"       
+                             data-chart-area="{width:280, height:80,background:''}"
+                             data-source="viewModel.pressureData"
+                             data-series="[{ field: 'val' }]">
+                        </div>
+                    </div>
+                    <div class="item">Temperature</div>
+                    <div class="spark">
+                        <div id="temp-log" style="width:280px;height:80px"
+                             data-role="sparkline"
+                             data-chart-area="{width:280, height:80,background:''}"
+                             data-tooltip="{visible:true, format: '{0} &deg;C'}"
+                             data-bind="source:temperatureData"
+                             data-series="[{ field: 'val', type: 'column' }]">
+                        </div>
+                    </div>
+                    <div class="item">Humidity</div>
+                    <div class="spark">
+                        <div id="hum-log" style="width:280px;height:80px"
+                             data-role="sparkline"       
+                             data-chart-area="{width:280, height:80,background:''}"
+                             data-type="area"
+                             data-bind="source:humidityData"
+                             data-series="[{ field: 'val', type: 'area' }]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="view" id="tabstrip-temperature" data-title="Climate Dashboard" data-model="viewModel" data-init="onViewInitialized">
+            <div class="dataviz-wrapper">
+                <h1>
+                    Temperature control
+                </h1>
+                <div class="dataviz-wrapper-content">
+                    <div id="temp-range"
+                         data-role="sparkline"   
+                         data-chart-area="{width:200, height: 50,background:''}"
+                         data-value-axis="{
+                         min: 0,
+                         max: 30,
+                         plotBands: [{
+                         from: 0, to: 15, color: '#787878', opacity: 0.15
+                         }, {
+                         from: 15, to: 22, color: '#787878', opacity: 0.3
+                         }, {
+                         from: 22, to: 30, color: '#787878', opacity: 0.15
+                         }]
+                         }"   
+                         data-type="bullet"
+                         data-tooltip="{visible:true}"
+                         data-bind="source:temperatureRange"
+                         data-series="[{ currentField: 'val', targetField: 't', type: 'bullet' }]">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="view" id="tabstrip-conditioner" data-title="Climate Dashboard" data-model="viewModel" data-init="onViewInitialized">
+            <div class="dataviz-wrapper">
+                <h1>
+                    Conditioner working time
+                </h1>
+                <div class="dataviz-wrapper-content">
+                    <ul class="pie-list stats">
+                        <li>
+                            MONDAY <span id="stats-mon" style="width:80px;height:80px"
+                                         data-role="sparkline"       
+                                         data-chart-area="{width:60, height:60,background:''}"
+                                         data-bind="source:monday"
+                                         data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+                        </li>
+                        <li>
+                            TUESDAY <span id="stats-tue" style="width:80px;height:80px"
+                                          data-role="sparkline"       
+                                          data-chart-area="{width:60, height:60,background:''}"
+                                          data-bind="source:tuesday"
+                                          data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+                        </li>
+                        <li>
+                            WEDNESDAY <span id="stats-wed" style="width:80px;height:80px"
+                                            data-role="sparkline"       
+                                            data-chart-area="{width:60, height:60,background:''}"
+                                            data-bind="source:wednesday"
+                                            data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+
+                        </li>
+                        <li>
+                            THURSDAY <span id="stats-thu" style="width:80px;height:80px"
+                                           data-role="sparkline"       
+                                           data-chart-area="{width:60, height:60,background:''}"
+                                           data-bind="source:thursday"
+                                           data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+                        </li>
+                        <li>
+                            FRIDAY <span id="stats-fri" style="width:80px;height:80px"
+                                         data-role="sparkline"       
+                                         data-chart-area="{width:60, height:60,background:''}"
+                                         data-bind="source:friday"
+                                         data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+
+                        </li>
+                        <li>
+                            SATURDAY <span id="stats-sat" style="width:80px;height:80px"
+                                           data-role="sparkline"       
+                                           data-chart-area="{width:60, height:60,background:''}"
+                                           data-bind="source:saturday"
+                                           data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+                        </li>
+                        <li>
+                            SUNDAY <span id="stats-sun" style="width:80px;height:80px"
+                                         data-role="sparkline"       
+                                         data-chart-area="{width:60, height:60,background:''}"
+                                         data-bind="source:sunday"
+                                         data-series="[{ field: 'val', type: 'pie' }]">
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="view" id="tabstrip-aggregated" data-title="Aggregated Climate" data-model="viewModel" data-init="onViewInitialized">
+            <div class="dataviz-wrapper">
+                <h1>
+                    Aggregated Climate Information
+                </h1>
+                <div class="dataviz-wrapper-content">
+                    <div id="chart"
+                         data-role="chart"
+                         data-title="{text: 'United States of America - Weather Averages'}"
+                         data-chart-area="{margin:0,background:''}"   
+                         data-legend="{position: 'bottom'}"
+                         data-series-defaults="{type: 'area'}"
+                         data-series="
+                         [
+                         {
+                         name: 'Average High',
+                         data: [5.6, 7.9, 12.5, 18, 22.9, 27.3, 29.8, 29, 25, 19.1, 11.9, 7.4]
+                         },{
+                         name: 'Average Low',
+                         data: [5.8, -4.3, -0.4, 4.2, 8.9, 13.2, 15.5, 14.8, 10.9, 5.4, 1, -4.1]
+                         },{
+                         name: 'Average',
+                         data: [5.7, 1.9, 6.1, 11.2, 16, 20.3, 22.8 ,22, 18.2, 12.5, 6.2, 1.7]
+                         }
+                         ]      
+                         "
+                         data-value-axis="{
+                         labels: {
+                         format: '{0} C'
+                         },
+                         line: {
+                         visible: false
+                         },
+                         axisCrossingValue: -10
+                         }"
+                          
+                        
+                         data-category-axis= "{
+                         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                         majorGridLines: {
+                         visible: false
+                         }
+                         }"
+                              
+                         data-tooltip="{visible: true, format: '{0} C', template: '#= series.name #: #= value #'}"
+                         data-value-axis="{max: 20}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="layout" data-id="mobile-tabstrip">
+            <header data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </header>
+
+            <div data-role="footer">
+                <div data-role="tabstrip">
+                    <a href="#tabstrip-climate" data-icon="home">Climate</a>
+                    <a href="#tabstrip-temperature" data-icon="share">Temperature</a>
+                    <a href="#tabstrip-conditioner" data-icon="globe">Conditioner</a>
+                    <a href="#tabstrip-aggregated" data-icon="more">Aggregated</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
