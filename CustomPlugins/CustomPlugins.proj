@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>01beef25-8614-4151-ab94-4f71561f01d3</ProjectGuid>
     <ProjectTypeGuids>{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}</ProjectTypeGuids>
-    <AppIdentifier>com.telerik.CustomPlugins</AppIdentifier>
+    <AppIdentifier>com.custom.icenium</AppIdentifier>
     <ProjectName>CustomPlugins</ProjectName>
     <IsRunnable>true</IsRunnable>
     <TemplateAppName>Cordova270</TemplateAppName>
@@ -32,8 +32,11 @@
     <Folder Include="App_Resources\Android\drawable-nodpi">
       <Platform>Android</Platform>
     </Folder>
+    <Folder Include="scripts\libraries" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="App_Resources\Android\xml\config.xml" />
+    <Resource Include="App_Resources\iOS\config.xml" />
     <Resource Include="App_Resources\iOS\icon.png" />
     <Resource Include="App_Resources\iOS\icon@2x.png" />
     <Resource Include="App_Resources\iOS\icon-72.png" />
@@ -49,6 +52,7 @@
     <Resource Include="App_Resources\iOS\Default-Landscape.png" />
     <Resource Include="App_Resources\iOS\Default-Portrait@2x.png" />
     <Resource Include="App_Resources\iOS\Default-Landscape@2x.png" />
+    <Resource Include="App_Resources\iOS\Info.plist" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\Android\drawable-hdpi\icon.png" />
@@ -58,17 +62,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="kendo\js\jquery.min.js" />
+    <Content Include="kendo\js\kendo.mobile.min.js" />
     <Content Include="kendo\styles\kendo.dataviz.default.min.css" />
     <Content Include="kendo\styles\kendo.dataviz.min.css" />
     <Content Include="kendo\styles\images\back.png" />
     <Content Include="kendo\styles\images\KendoUI.ttf" />
     <Content Include="kendo\styles\images\KendoUI.woff" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
-    <Content Include="kendo\js\kendo.dataviz.mobile.min.js" />
-    <Content Include="scripts\libraries\jquery.min.js" />
-    <Content Include="scripts\libraries\canvg.js" />
-    <Content Include="scripts\libraries\rgbcolor.js" />
-    <Content Include="scripts\hello-world.js" />
+    <Content Include="Plugins\Canvas2ImagePlugin\.gitignore" />
+    <Content Include="Plugins\Canvas2ImagePlugin\plugin.xml" />
+    <Content Include="Plugins\Canvas2ImagePlugin\README.md" />
+    <Content Include="Plugins\Canvas2ImagePlugin\src\ios\Canvas2ImagePlugin.h" />
+    <Content Include="Plugins\Canvas2ImagePlugin\src\ios\Canvas2ImagePlugin.m" />
+    <Content Include="Plugins\Canvas2ImagePlugin\www\Canvas2ImagePlugin.js" />
+    <Content Include="scripts\app.js" />
     <Content Include="styles\main.css" />
     <Content Include="cordova.ios.js">
       <Platform>iOS</Platform>
