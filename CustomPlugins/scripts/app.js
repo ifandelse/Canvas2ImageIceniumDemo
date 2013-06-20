@@ -41,12 +41,15 @@ var app = (function() {
         var fileReader = new FileReader();
         var $photo;
         var wired = false;
+        var mpImg;
         
         fileReader.onload = function (e) {
             img.src = e.target.result;
         };
         
-        return { 
+        var vm = { 
+            
+            img: img,
             
             caption: '',
             
@@ -80,13 +83,7 @@ var app = (function() {
                 }
                 
                 if (img.width) {
-                    cache.context.drawImage(
-                        img,
-                        (cache.canvas.width  - neww) / 2,
-                        (cache.canvas.height - newh) / 2,
-                        neww,
-                        newh
-                    );
+                    new MegaPixImage(img).render(canvas, { width: neww, height: newh });
                 }
                 
                 cache.context.font = 'bold 32pt helvetica';
@@ -108,10 +105,11 @@ var app = (function() {
             
             onPicSet: function(e) {
                 var file = e.target.files[0];  
-                fileReader.readAsDataURL(file); 
+                //mpImg = new MegaPixImage(file);
+                fileReader.readAsDataURL(file);
                 this.set('picSelected', true);
                 this.set('picName', file.name);
-                this.drawImage(this.get('caption'), this.get('textColor'));
+                this.drawImage();
             },
             
             onRemovePic: function() {
@@ -124,9 +122,13 @@ var app = (function() {
             saveCanvasToImage: function (e) {
                 e.preventDefault();
                 var canvas2ImagePlugin = window.plugins.canvas2ImagePlugin;
+                var self = this;
                 canvas2ImagePlugin.saveImageDataToLibrary(
                     function(msg){
-                        navigator.notification.alert(msg);
+                        navigator.notification.alert(msg, function() {
+                            self.set('caption', "");
+                            self.onRemovePic();
+                        });
                     }, 
                     function(err){
                         navigator.notification.alert(err);
@@ -135,6 +137,10 @@ var app = (function() {
                 );
             }
         };
+        
+        vm.debouncedDrawImage = _.debounce(vm.drawImage, 400);
+        
+        return vm;
         
     }());
     
