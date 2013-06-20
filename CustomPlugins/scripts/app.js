@@ -41,7 +41,6 @@ var app = (function() {
         var fileReader = new FileReader();
         var $photo;
         var wired = false;
-        var mpImg;
         
         fileReader.onload = function (e) {
             img.src = e.target.result;
@@ -77,11 +76,6 @@ var app = (function() {
                 
                 cache.canvas.width = cache.canvas.width;
                 
-                if(!wired) {
-                    img.onload = this.drawImage.bind(this); 
-                    wired = true;
-                }
-                
                 if (img.width) {
                     new MegaPixImage(img).render(canvas, { width: neww, height: newh });
                 }
@@ -105,7 +99,10 @@ var app = (function() {
             
             onPicSet: function(e) {
                 var file = e.target.files[0];  
-                //mpImg = new MegaPixImage(file);
+                if(!wired) { 
+                    wired = true;
+                    img.onload = this.drawImage.bind(this);
+                }
                 fileReader.readAsDataURL(file);
                 this.set('picSelected', true);
                 this.set('picName', file.name);
